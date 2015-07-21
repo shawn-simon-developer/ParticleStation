@@ -6,6 +6,8 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		this.position = point || new Vector(400, 400);
 		this.velocity = velocity || new Vector(0, 0);
 		this.acceleration = acceleration || new Vector(0, 0);
+		this.type = Math.floor(Math.random()*2);
+		this.drawColor = this.type === 0 ? "rgb(52, 152, 219)" : "rgb(241, 196, 15)";
 	}
 
 	Particle.prototype.submitToFields = function (fields) {

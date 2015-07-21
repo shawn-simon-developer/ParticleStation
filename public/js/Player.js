@@ -7,8 +7,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		this.velocity = velocity || new Vector(0, 0);
 		this.acceleration = acceleration || new Vector(0, 0);
 		this.drawColor = "#555"; // So we can tell them apart from Fields later
-		this.lastVerticle;
-		this.lastHorizontal;
+		this.life = 10;
 	}
 
 	Player.prototype.move = function (horizontal, vertical) {

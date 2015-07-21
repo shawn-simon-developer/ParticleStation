@@ -1,6 +1,6 @@
 require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, Particle, Emitter, Field, Player) {
 
-	var maxParticles = 20;
+	var maxParticles = 2000;
 	var particleSize = 5;
 	var emissionRate = 1;
 	var objectSize = 15; // drawSize of emitter/field
@@ -9,8 +9,10 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	var canvas = document.querySelector('canvas');
 	var ctx = canvas.getContext('2d');
 
+	var headerOffset = 0;
+
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.height = window.innerHeight - headerOffset;
 
 
 	function addNewParticles() {
@@ -50,12 +52,12 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	}
 
 	function drawParticles() {
-	  ctx.fillStyle = 'rgb(255,255,255)';
 	  for (var i = 0; i < particles.length; i++) {
 	    var position = particles[i].position;
 	    ctx.beginPath();
 	    ctx.arc(position.x, position.y, particleSize/2, 0, Math.PI * 2);
 	    ctx.closePath();
+	    ctx.fillStyle = particles[i].drawColor;
 		ctx.fill();
 	  }
 	}
@@ -69,11 +71,13 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	}
 
 	function drawPlayer(player) {
-		ctx.fillStyle = player.drawColor;
-		ctx.beginPath();
-		ctx.arc(player.position.x, player.position.y, playerSize, 0, Math.PI * 2);
-		ctx.closePath();
-		ctx.fill();
+		if (player.life >= 0) {
+			ctx.fillStyle = player.drawColor;
+			ctx.beginPath();
+			ctx.arc(player.position.x, player.position.y, playerSize, 0, Math.PI * 2);
+			ctx.closePath();
+			ctx.fill();
+		};
 	}
 
 	function checkCollision(player) {
@@ -82,6 +86,12 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 			if ((particle.position.x <= player.position.x+playerSize/2) && (particle.position.x >= player.position.x-playerSize/2) && 
 				(particle.position.y <= player.position.y+playerSize/2) && (particle.position.y >= player.position.y-playerSize/2)) {
 				particles.splice(i, 1);
+				if (particle.type === 0) {
+					playerSize = playerSize - 1;
+				}
+				else {
+					playerSize = playerSize + 1;
+				}
 			}
 		};
 	}
@@ -106,6 +116,8 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 
 	var player = new Player();
 
+	var pause = false;
+
 	document.onmousemove = handleMouseMove;
 	var lastX;
 	var lastY;
@@ -115,15 +127,16 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 		event = event || window.event;
 
 		lastX = event.pageX;
-		lastY = event.pageY;
+		lastY = event.pageY - headerOffset;
 	}
 
-
 	function loop() {
-		clear();
-		update();
-		draw();
-		queue();
+		if (!pause) {
+			clear();
+			update();
+			draw();
+			queue();
+		}
 	}
 
 	function clear() {
@@ -140,7 +153,7 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	  drawParticles();
 	  fields.forEach(drawCircle);
 	  emitters.forEach(drawCircle);
-	  drawCircle(player);
+	  drawPlayer(player);
 	  player.move(lastX, lastY);
 	}
 

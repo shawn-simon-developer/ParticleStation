@@ -5,3 +5,13 @@ body,html {
 canvas {
 	background-color: black;
 }
+
+
+.options {
+	height: 60px;
+	width: 100%;
+}
+
+.option {
+	padding-top: 15px;
+}
