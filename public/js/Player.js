@@ -12,15 +12,8 @@ define(["require", "exports", "module"], function(require, exports, module) {
 	}
 
 	Player.prototype.move = function (horizontal, vertical) {
-		//console.log(horizontal, vertical);
-		var limit = 2;
 
-		// if (horizontal === 0) {
-		// 	this.acceleration.x = 0;
-		// }
-		// if (vertical === 0) {
-		// 	this.acceleration.y = 0;
-		// }
+		var limit = 4;
 
 		if (Math.abs(this.acceleration.x) <= limit) {
 			this.acceleration.x = ((horizontal - this.position.x) - this.velocity.x);
@@ -48,12 +41,12 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		}
 
 
-		console.log("Acceleration:", this.acceleration.x, this.acceleration.y);	
+		//console.log("Acceleration:", this.acceleration.x, this.acceleration.y);	
 
 		this.velocity.x = this.velocity.x + this.acceleration.x/10;
 		this.velocity.y = this.velocity.y + this.acceleration.y/10;
 
-		console.log("Velocity:", this.velocity.x, this.velocity.y)
+		//console.log("Velocity:", this.velocity.x, this.velocity.y)
 
 		var posX = this.position.x + (this.velocity.x + 0.5*this.acceleration.x);
 		var posY = this.position.y + (this.velocity.y + 0.5*this.acceleration.y);
@@ -71,7 +64,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 			this.position.y = posY;
 		}
 
-		console.log("Position:", this.position.x, this.position.y);
+		//console.log("Position:", this.position.x, this.position.y);
 
 		//this.velocity.add(this.acceleration);
 		//this.position.add(this.velocity);

@@ -1,9 +1,10 @@
 require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, Particle, Emitter, Field, Player) {
 
 	var maxParticles = 20;
-	var particleSize = 2;
+	var particleSize = 5;
 	var emissionRate = 1;
 	var objectSize = 15; // drawSize of emitter/field
+	var playerSize = 15;
 
 	var canvas = document.querySelector('canvas');
 	var ctx = canvas.getContext('2d');
@@ -70,9 +71,19 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	function drawPlayer(player) {
 		ctx.fillStyle = player.drawColor;
 		ctx.beginPath();
-		ctx.arc(player.position.x, player.position.y, 40, 0, Math.PI * 2);
+		ctx.arc(player.position.x, player.position.y, playerSize, 0, Math.PI * 2);
 		ctx.closePath();
 		ctx.fill();
+	}
+
+	function checkCollision(player) {
+		for (var i = 0; i < particles.length; i++) {
+			particle = particles[i];
+			if ((particle.position.x <= player.position.x+playerSize/2) && (particle.position.x >= player.position.x-playerSize/2) && 
+				(particle.position.y <= player.position.y+playerSize/2) && (particle.position.y >= player.position.y-playerSize/2)) {
+				particles.splice(i, 1);
+			}
+		};
 	}
 	 
 	var particles = []; 
@@ -96,13 +107,15 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	var player = new Player();
 
 	document.onmousemove = handleMouseMove;
+	var lastX;
+	var lastY;
 	function handleMouseMove(event) {
 		var dot, eventDoc, doc, body, pageX, pageY;
 
 		event = event || window.event;
 
-		console.log(event.pageX, event.pageY);
-		player.move(event.pageX, event.pageY);
+		lastX = event.pageX;
+		lastY = event.pageY;
 	}
 
 
@@ -120,6 +133,7 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	function update() {
 		addNewParticles();
 		plotParticles(canvas.width, canvas.height);
+		checkCollision(player);
 	}
 
 	function draw() {
@@ -127,7 +141,7 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	  fields.forEach(drawCircle);
 	  emitters.forEach(drawCircle);
 	  drawCircle(player);
-	  //player.move(0, 0, 0)
+	  player.move(lastX, lastY);
 	}
 
 	function queue() {
