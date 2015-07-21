@@ -2,13 +2,18 @@ define(["require", "exports", "module"], function(require, exports, module) {
 
 	var Vector = require('Vector');
 
-	var Player = function Player(point, velocity, acceleration) {
+	var Player = function Player(point, velocity, acceleration, mass) {
 		this.position = point || new Vector(30, 30);
 		this.velocity = velocity || new Vector(0, 0);
 		this.acceleration = acceleration || new Vector(0, 0);
 		this.drawColor = "#555"; // So we can tell them apart from Fields later
 		this.life = 10;
+		this.mass = mass || 0;
 	}
+
+	Player.prototype.setMass = function(mass) {
+		this.mass = mass || 0;
+	};
 
 	Player.prototype.move = function (horizontal, vertical) {
 
