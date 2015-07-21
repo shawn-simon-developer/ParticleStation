@@ -93,39 +93,16 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 		generateUniverse()
 	}, 5000);
 
-
-	document.onkeydown = checkKey;
-
 	var player = new Player();
 
-	function checkKey(e) {
+	document.onmousemove = handleMouseMove;
+	function handleMouseMove(event) {
+		var dot, eventDoc, doc, body, pageX, pageY;
 
-		e = e || window.event;
+		event = event || window.event;
 
-		var movement = 0.0001;
-
-		console.log("Key press");
-
-		if (e.keyCode == '38') {
-		    // up arrow
-		    player.move(0, movement);
-		}
-		else if (e.keyCode == '40') {
-		    // down arrow
-		    player.move(0, -movement);
-		}
-		else if (e.keyCode == '37') {
-		   // left arrow
-		   player.move(movement, 0);
-		}
-		else if (e.keyCode == '39') {
-		   // right arrow
-		   player.move(-movement, 0);
-		}
-		else {
-			player.move(0, 0);
-		}
-
+		console.log(event.pageX, event.pageY);
+		player.move(event.pageX, event.pageY);
 	}
 
 
@@ -150,7 +127,7 @@ require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, P
 	  fields.forEach(drawCircle);
 	  emitters.forEach(drawCircle);
 	  drawCircle(player);
-	  player.move(0, 0, 0)
+	  //player.move(0, 0, 0)
 	}
 
 	function queue() {
