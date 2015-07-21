@@ -1,10 +1,9 @@
-require(["Vector", "Particle", "Emitter", "Field"], function(Vector, Particle, Emitter, Field) {
+require(["Vector", "Particle", "Emitter", "Field", "Player"], function(Vector, Particle, Emitter, Field, Player) {
 
-	var maxParticles = 20000;
+	var maxParticles = 20;
 	var particleSize = 2;
-	var emissionRate = 5;
+	var emissionRate = 1;
 	var objectSize = 15; // drawSize of emitter/field
-
 
 	var canvas = document.querySelector('canvas');
 	var ctx = canvas.getContext('2d');
@@ -25,7 +24,7 @@ require(["Vector", "Particle", "Emitter", "Field"], function(Vector, Particle, E
 	}
 
 	function plotParticles(boundsX, boundsY) {
-		
+
 	  var currentParticles = [];
 
 	  for (var i = 0; i < particles.length; i++) {
@@ -67,6 +66,14 @@ require(["Vector", "Particle", "Emitter", "Field"], function(Vector, Particle, E
 		ctx.closePath();
 		ctx.fill();
 	}
+
+	function drawPlayer(player) {
+		ctx.fillStyle = player.drawColor;
+		ctx.beginPath();
+		ctx.arc(player.position.x, player.position.y, 40, 0, Math.PI * 2);
+		ctx.closePath();
+		ctx.fill();
+	}
 	 
 	var particles = []; 
 
@@ -84,7 +91,42 @@ require(["Vector", "Particle", "Emitter", "Field"], function(Vector, Particle, E
 	generateUniverse()
 	setInterval(function () {
 		generateUniverse()
-	}, 2000);
+	}, 5000);
+
+
+	document.onkeydown = checkKey;
+
+	var player = new Player();
+
+	function checkKey(e) {
+
+		e = e || window.event;
+
+		var movement = 0.0001;
+
+		console.log("Key press");
+
+		if (e.keyCode == '38') {
+		    // up arrow
+		    player.move(0, movement);
+		}
+		else if (e.keyCode == '40') {
+		    // down arrow
+		    player.move(0, -movement);
+		}
+		else if (e.keyCode == '37') {
+		   // left arrow
+		   player.move(movement, 0);
+		}
+		else if (e.keyCode == '39') {
+		   // right arrow
+		   player.move(-movement, 0);
+		}
+		else {
+			player.move(0, 0);
+		}
+
+	}
 
 
 	function loop() {
@@ -107,6 +149,8 @@ require(["Vector", "Particle", "Emitter", "Field"], function(Vector, Particle, E
 	  drawParticles();
 	  fields.forEach(drawCircle);
 	  emitters.forEach(drawCircle);
+	  drawCircle(player);
+	  player.move(0, 0, 0)
 	}
 
 	function queue() {

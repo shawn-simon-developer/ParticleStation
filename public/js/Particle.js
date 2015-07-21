@@ -3,7 +3,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 	var Vector = require('Vector');
 
 	var Particle = function Particle(point, velocity, acceleration) {
-		this.position = point || new Vector(0, 0);
+		this.position = point || new Vector(400, 400);
 		this.velocity = velocity || new Vector(0, 0);
 		this.acceleration = acceleration || new Vector(0, 0);
 	}
