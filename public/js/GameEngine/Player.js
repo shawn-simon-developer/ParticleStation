@@ -1,6 +1,6 @@
 define(["require", "exports", "module"], function(require, exports, module) {
 
-	var Vector = require('Vector');
+	var Vector = require('GameEngine/Vector');
 
 	var Player = function Player(point, velocity, acceleration, mass) {
 		this.position = point || new Vector(30, 30);

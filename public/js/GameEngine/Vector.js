@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(["require", "exports", "module"], function(require, exports, module) {
 
 	var Vector = function Vector(x, y) {
 		this.x = x || 0;

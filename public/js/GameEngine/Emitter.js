@@ -1,7 +1,7 @@
 define(["require", "exports", "module"], function(require, exports, module) {
 
-	var Vector = require("Vector");
-	var Particle = require("Particle");
+	var Vector = require("GameEngine/Vector");
+	var Particle = require("GameEngine/Particle");
 
 	function Emitter(point, velocity, spread) {
 		this.position = point; // Vector

@@ -1,6 +1,6 @@
 define(["require", "exports", "module"], function(require, exports, module) {
 
-	var Vector = require('Vector');
+	var Vector = require('GameEngine/Vector');
 
 	var Particle = function Particle(point, velocity, acceleration) {
 		this.position = point || new Vector(400, 400);
@@ -18,19 +18,19 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		for (var i = 0; i < fields.length; i++) {
 			var field = fields[i];
 
-			// find the distance between the particle and the field
+			// Find the distance between the particle and the field.
 			var vectorX = field.position.x - this.position.x;
 			var vectorY = field.position.y - this.position.y;
 
-			// calculate the force.
+			// Calculate the force.
 			var force = field.mass / Math.pow(vectorX*vectorX+vectorY*vectorY, 1.5);
 
-			// add to the total acceleration the force adjusted by distance
+			// Add to the total acceleration the force adjusted by distance.
 			totalAccelerationX += vectorX * force;
 			totalAccelerationY += vectorY * force;
 		}
 
-		// update our particle's acceleration
+		// Update our particle's acceleration.
 		this.acceleration = new Vector(totalAccelerationX, totalAccelerationY);
 	};
 
