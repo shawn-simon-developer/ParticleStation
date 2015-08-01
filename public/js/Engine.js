@@ -9,6 +9,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 	var GameObject = function(gameOptions) {
 		this.particles = [];
 		this.emitters = [];
+		this.fields = [];
 		this.gameOptions = gameOptions;
 		this.player;
 		this.canvas;
@@ -34,7 +35,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		this.ctx = this.canvas.getContext('2d');
 
 		// Start random universe generation.
-		this.generateUniverse()
+		this.generateUniverse();
 		self = this;
 		// setInterval(function () {
 		// 	self.generateUniverse().bind(self);
@@ -74,7 +75,7 @@ define(["require", "exports", "module"], function(require, exports, module) {
 			if (pos.x < 0 || pos.x > boundsX || pos.y < 0 || pos.y > boundsY) continue;
 
 			// Update velocities and accelerations to account for the fields.
-			particle.submitToFields(fields);
+			particle.submitToFields(this.fields);
 
 			if (this.player.mass != 0) {
 				particle.submitToFields([this.player]);
@@ -161,14 +162,10 @@ define(["require", "exports", "module"], function(require, exports, module) {
 
 	GameObject.prototype.draw = function() {
 		this.drawParticles();
-		for (var i = 0; this.fields < this.fields.legnth; i++) {
-			self.drawCircle(this.fields[i])
-		}
-		//this.fields.forEach(self.drawCircle);
-		for (var i = 0; this.emitters < this.emitters.legnth; i++) {
-			self.drawCircle(this.emitters[i])
-		}
-		//this.emitters.forEach(self.drawCircle);
+
+		this.fields.forEach(self.drawCircle.bind(this));
+
+		this.emitters.forEach(self.drawCircle.bind(this));
 		this.drawPlayer();
 		this.player.move(this.lastX, this.lastY);
 	};
