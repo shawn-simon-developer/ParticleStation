@@ -37,9 +37,9 @@ define(["require", "exports", "module"], function(require, exports, module) {
 		// Start random universe generation.
 		this.generateUniverse();
 		self = this;
-		// setInterval(function () {
-		// 	self.generateUniverse().bind(self);
-		// }, 5000);
+		setInterval(function () {
+			self.generateUniverse();
+		}, 5000);
 
 		document.onmousemove = function(event) {
 			var pageX, pageY;
