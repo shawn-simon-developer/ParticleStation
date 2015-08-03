@@ -1,0 +1,19 @@
+require(["GameEngine/Game"], function(Game) {
+	
+	console.log(Game);
+
+
+<<<<<<< HEAD
+
+});
+=======
+var game = function(GameOptions) {
+	require(["Vector", "Particle", "Emitter", "Field", "Player", "Engine"], function(Vector, Particle, Emitter, Field, Player, Engine) {
+
+		var newGame = new Engine(GameOptions);
+		newGame.startGame();
+	});
+};
+
+game(GameOptions);
+>>>>>>> my-temporary-work
