@@ -1,4 +1,4 @@
-define(["require", "exports", "module"], function(require, exports, module) {
+define(["require", "exports", "module", "Vector", "Emitter", "Field", "Particle", "Player"], function(require, exports, module) {
 
 	var Vector = require('GameEngine/Vector');
 	var Emitter = require('GameEngine/Emitter');
