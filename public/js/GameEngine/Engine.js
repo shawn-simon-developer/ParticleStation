@@ -1,10 +1,10 @@
 define(["require", "exports", "module"], function(require, exports, module) {
 
-	var Vector = require('Vector');
-	var Emitter = require('Emitter');
-	var Field = require('Field');
-	var Particle = require('Particle');
-	var Player = require('Player');
+	var Vector = require('GameEngine/Vector');
+	var Emitter = require('GameEngine/Emitter');
+	var Field = require('GameEngine/Field');
+	var Particle = require('GameEngine/Particle');
+	var Player = require('GameEngine/Player');
 
 	var GameObject = function(gameOptions) {
 		this.particles = [];

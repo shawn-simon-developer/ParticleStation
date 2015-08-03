@@ -12,10 +12,11 @@ function GameOptions(numOfParticles, particleSize, emissionRate, objectSize, pla
 var GameOptions = new GameOptions();
 
 var game = function(GameOptions) {
-	require(["Vector", "Particle", "Emitter", "Field", "Player", "Engine"], function(Vector, Particle, Emitter, Field, Player, Engine) {
+	require(["GameEngine/Vector", "GameEngine/Particle", "GameEngine/Emitter", "GameEngine/Field", "GameEngine/Player", "GameEngine/Engine"], function(Vector, Particle, Emitter, Field, Player, Engine) {
 
 		var newGame = new Engine(GameOptions);
 		newGame.startGame();
+		
 	});
 };
 
